@@ -1,0 +1,59 @@
+#NEXUS
+#Amazon, Brazilian Shield, Choco, Central America, Andes
+Begin data;
+Dimensions ntax=48 nchar=2;
+Format datatype=Standard missing=? gap=- labels="01";
+Matrix
+
+                                                    [LH]
+Pac_nan650777                                        10
+P_c_cin46602                                         10
+P_c_fulv8812                                         10
+P_c_cas395729                                        10
+P_c_ama390007                                        10
+P_tzensis_1195                                       01
+P_m_uro101156                                        01
+P_a_orn_41620                                        01
+P_albogriseus_494147                                 01
+Pac_salv8114                                         01
+P_marginatus_141                                     10
+Pac_nan650772                                        10
+Pac_nan5436                                          10
+P_nanus_7221                                         10
+P_a_gua33450                                         11
+P_p_sim60813                                         10
+P_p_spi433661                                        11
+P_spixii_636057                                      10
+P_p_nig473791                                        10
+P_p_pol392915                                        10
+Pac_dor282130                                        11
+P_v_vers_1630                                        01
+P_v_meri1674                                         01
+P_v_cos19903                                         01
+P_v_vir37974                                         10
+P_x_xant_18786                                       11
+P_spod28466                                          10
+P_r_juru7299                                         10
+P_v_val392917                                        10
+P_v_aud6128                                          11
+P_h_hom12174                                         11
+P_h_hom2306                                          11
+Pac_sum104042                                        10
+P_a_alb393859                                        11
+Pac_min13868                                         10
+X_albin627351                                        10
+Tityra_inquisitor_UFAC_422                           10
+Tityra_inquis_KU3625                                 10
+Tityra_inquisitor_buckleyi_FMNH_282133               10
+Tityra_cayana_GDL_023                                10
+Tityra_cayan_L3145                                   10
+Tityra_columbiana_408024                             10
+Tit_sem3682                                          10
+Tityra_deses_493766                                  10
+Tityra_semata_MPEGORX425                             10
+Tityra_semata_474321                                 10
+Iodop_isalae_L9597                                   10
+Iodop_fusca_S626253                                  10
+    ;
+End;
+
