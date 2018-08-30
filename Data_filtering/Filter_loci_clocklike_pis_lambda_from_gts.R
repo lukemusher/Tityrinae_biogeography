@@ -224,3 +224,97 @@ Make_df_lambda<-function(x,trees,outgroup,remove.taxa){
 
 uce_table<-Make_df_lambda(files,trees,outgroup,remove.taxa)
 
+###############################
+##########ANALYSES#############
+###############################
+library(BayesianFirstAid)
+library(rjags)
+
+par(mfrow=c(1,1))
+tab<-read.csv("../timetree-4376-3May18.csv")
+attach(tab)
+names(tab)
+hist(LR)
+min(log10lambda)
+#look at correlations. Might take a while under bayesian as below
+outputCor1<-bayes.cor.test(var.sites, LR)
+outputCor2<-bayes.cor.test(var.sites, log10lambda)
+outputCor3<-bayes.cor.test(log10lambda,LR)
+outputCor4<-bayes.cor.test(var.frac,LR)
+plot(outputCor1)
+plot(outputCor2)
+plot(outputCor3)
+plot(outputCor4)
+
+range(LR)
+mean(LR)
+sd(LR)
+
+mod<-glm(LR~var.sites+var.frac+log10lambda)
+cooksd<-cooks.distance(mod)
+summary(mod)
+plot(cooksd, pch="+", cex=1, main="Influential Obs by Cooks distance")
+abline(h=3*mean(cooksd, na.rm=T), col="red")
+points(x=ifelse(cooksd>3*mean(cooksd, na.rm=T), names(cooksd),""), col="red")
+#text(x=1:length(cooksd)+1, y=cooksd, labels=ifelse(cooksd>3*mean(cooksd, na.rm=T), names(cooksd),""),col="red")
+
+influential <- as.numeric(names(cooksd)[cooksd > 3*mean(cooksd, na.rm=T)])
+tab[influential, ]
+x<-c(1:1160)
+tab2<-tab[! x %in% influential,]
+
+write.csv(tab2,file="../tab2.csv")
+
+tab3<-tab[influential,]
+write.csv(tab3,file="../tab3.csv")
+
+mod2<-glm(tab2$LR~tab2$var.sites+tab2$var.frac+tab2$log10lambda)
+summary(mod2)
+par(mfrow=c(5,5), mar=c(0.1,0.1,0.8,0.1))
+
+###plot some outliers
+for (i in tab3[15:39,]$Tre){
+  tree<-read.tree(i)
+  if("acachl" %in% tree$tip.label){
+    tree<-midpoint(ladderize(tree), "acachl")
+  }
+  if(!("acachl" %in% tree$tip.label)){
+    tree<-midpoint(ladderize(tree))
+  }
+  plot.phylo(tree, show.tip.label = F, main=paste("IS:",tab[tab$Tre==i,5], "LR:",round(tab[tab$Tre==i,9])))
+}
+
+#plot low and high lambda trees
+par(mfrow=c(5,5), mar=c(0.1,0.1,0.8,0.1))
+for (i in tab2[1:25]$Tre){
+  tree<-read.tree(i)
+  if(tab[tab$Tre==i,8]==-6){
+    plot.phylo(ladderize(midpoint(tree)), show.tip.label = F, main=paste("LR=",round(tab[tab$Tre==i,9])))
+  }
+}
+
+par(mfrow=c(10,3), mar=c(0.1,0.1,0.8,0.1))
+for (i in tab$Tre){
+  tree<-read.tree(i)
+  if(tab[tab$Tre==i,8]==2){
+    plot.phylo(ladderize(midpoint(tree)), show.tip.label = F, main=paste("LR=",round(tab[tab$Tre==i,9])))
+  }
+}
+
+tab2<-read.csv("../tab2.csv")
+
+#plot low LR trees
+par(mfrow=c(5,5), mar=c(0.1,0.1,0.8,0.1))
+
+for (i in tab2[1:25,]$Tre){
+  tree<-read.tree(i)
+  plot.phylo(ladderize(midpoint(tree)), show.tip.label = F, main=paste("IS:",tab[tab$Tre==i,5], "LR:",round(tab[tab$Tre==i,9])))
+}
+
+par(mfrow=c(10,3), mar=c(0.1,0.1,0.8,0.1))
+for (i in tab$Tre){
+  tree<-read.tree(i)
+  if(tab[tab$Tre==i,9]>16000){
+    plot.phylo(ladderize(midpoint(tree)), show.tip.label = F, main=paste("LR=",round(tab[tab$Tre==i,9])))
+  }
+}
