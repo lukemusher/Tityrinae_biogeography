@@ -19,7 +19,7 @@
    kappa_gamma = 6 2      * gamma prior for kappa
    alpha_gamma = 1 1      * gamma prior for alpha
 
-   rgene_gamma = 2 2000000   * gamma prior for overall rates for genes
+   rgene_gamma = 2 200000   * gamma prior for overall rates for genes
   sigma2_gamma = 1 10    * gamma prior for sigma^2     (for clock=2 or 3)
 
       finetune = 1: 0.1  0.0001  0.0001  0.01 .5  * auto (0 or 1) : times, musigma2, rates, mixing, paras, FossilErr
