@@ -21,19 +21,19 @@ write(state_desc_str, file=out_fn+".state_labels.txt")
 #read the tree
 tree <- readTrees(tree_fn)[1]
 
-log10_rate_bg ~ dnUniform(-4,2)
-log10_rate_bg.setValue(-2)
-moves[++mi] = mvSlide(log10_rate_bg, weight=4)
+exp10_rate_bg ~ dnExponential(10.0)
 
-rate_bg := 10^log10_rate_bg
+moves[++mi] = mvScale(exp10_rate_bg, weight=10)
+
+rate_bg := exp10_rate_bg
 
 #define dispersal rates among ecologies: assume equal transitional probabilities
 for (i in 1:n_ecologies) {
   for (j in 1:n_ecologies) {
     dr[i][j] <- 0.0
     if (i!=j) {
-    dr[i][j] ~ dnExponential(1.0)
-    moves[++mi] = mvScale(dr[i][j], weight=1)
+    dr[i][j] ~ dnExponential(20.0)
+    moves[++mi] = mvScale(dr[i][j], weight=10)
     }
   }
 }
@@ -46,8 +46,8 @@ for (i in 1:n_ecologies) {
   for (j in 1:n_ecologies) {
     er[i][j] <- 0.0
   }
-er[i][i] ~ dnExponential(1.0)
-moves[++mi] = mvScale(er[i][i], weight=1)
+er[i][i] ~ dnExponential(20.0)
+moves[++mi] = mvScale(er[i][i], weight=10)
 
 }
 
