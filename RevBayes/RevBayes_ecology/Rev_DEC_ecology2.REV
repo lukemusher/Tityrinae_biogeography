@@ -21,6 +21,9 @@ write(state_desc_str, file=out_fn+".state_labels.txt")
 #read the tree
 tree <- readTrees(tree_fn)[1]
 
+
+#create prior for rate of state change along the phylogeny. Here we set up an exponential prior with lambda = 10, which suggests a mean 1 state change per 10MY
+
 exp10_rate_bg ~ dnExponential(10.0)
 
 moves[++mi] = mvScale(exp10_rate_bg, weight=10)
