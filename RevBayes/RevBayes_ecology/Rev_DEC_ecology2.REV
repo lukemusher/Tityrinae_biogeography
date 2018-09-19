@@ -70,7 +70,7 @@ monitors[5] = mnFile(rate_bg, er[1][1],er[2][2],dr[2], dr[1], file=out_fn+".para
 mymodel=model(m_bg)
 
 mymcmc = mcmc(mymodel, moves, monitors)
-mymcmc.run(5000)
+mymcmc.run(15000)
 
 
 #GET RESULTS
