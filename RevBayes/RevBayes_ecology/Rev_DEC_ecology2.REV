@@ -46,7 +46,7 @@ for (i in 1:n_ecologies) {
   for (j in 1:n_ecologies) {
     er[i][j] <- 0.0
   }
-er[i][i] ~ dnExponential(20.0)
+er[i][i] ~ dnExponential(10.0)
 moves[++mi] = mvScale(er[i][i], weight=10)
 
 }
