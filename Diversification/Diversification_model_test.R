@@ -1,4 +1,5 @@
-#scripts here provided by Frank Burbrink during his course, "Applied Phylogenetics"
+#Some of the scripts here were initially provided by Dr. Frank Burbrink during his course at AMNH, "Applied Phylogenetics"
+#DDD scripts were provided by Dr. Fabien Condamine
 
 setwd("")
 library(RPANDA)
