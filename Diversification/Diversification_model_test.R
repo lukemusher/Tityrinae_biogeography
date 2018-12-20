@@ -8,10 +8,13 @@ library(geiger)
 library(DDD)
 library(TESS)
 
+#Read your tree
 read.tree("Tree.tre")->tree
 
+#Plot your lineages through time
 ltt.plot(tree, log="y", col="blue", lwd=3, xlim=c(-40, 0))
 
+#simulate some trees under constant b&d and plot their LTTs with your LTT
 replicate(10000,rbdtree(birth=bd.km(tree), death=0.0001, Tmax =max(branching.times(tree)), BIRTH = NULL,
                       DEATH = NULL, eps = 1e-6), F)->simmed
 class(simmed)<-"multiPhylo"
@@ -19,11 +22,14 @@ class(simmed)<-"multiPhylo"
 mltt.plot(simmed, log="y", legend=F)
 ltt.lines(tree, col="darkred", lwd=3)
 
+#one-tailed t-test gamma-test to test if div rates decline through time
 gamStat(branching.times(tree))
 
 ##Let's look at the 9 Models of diversification from Morlon Fig.1; 
 #http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1000493
 
+Model1 <- fit_coal_cst(tree, tau0=1.e-3, gamma=-1, cst.rate=T, N0=50)
+Model2<-fit_coal_cst(tree, tau0=1.e-3, gamma=-1, cst.rate=FALSE, N0=50)
 Model3<-fit_coal_var(tree, lamb0=0.15, alpha=-0.001, mu0=0.01, beta=0, N0=70, cst.lamb = T, cst.mu =T)
 Model4a<-fit_coal_var(tree, lamb0=0.15, alpha=-0.001, mu0=0.01, beta=0, N0=70, cst.lamb = F, cst.mu = T)
 Model4b<-fit_coal_var(tree, lamb0=0.15, alpha=-0.001, mu0=0.01, beta=0, N0=70, cst.lamb = T, cst.mu = F)
@@ -32,17 +38,23 @@ Model4d<-fit_coal_var(tree, lamb0=0.15, alpha=-0.001, mu0=0.01, beta=0, N0=70, c
 Model5<-fit_coal_var(tree, lamb0=0.15, alpha=-0.001, mu0=0.01, beta=0, N0=70, cst.lamb = T, mu.0=T)
 Model6<-fit_coal_var(tree, lamb0=0.15, alpha=-0.001, mu0=0.01, beta=0, N0=70, cst.lamb = F, mu.0=T)
 
+#compile results as table
 as.table(c(Model1$aicc, Model2$aicc, Model3$aicc, Model4a$aicc, Model4b$aicc, Model4c$aicc, Model4d$aicc, Model5$aicc, Model6$aicc))->table
 names(table)<-c("Model1", "Model2", "Model3", "Model4a", "Model4b", "Model4c", "Model4d", "Model5", "Model6")
 table
 min(table)-table->tree_table
 
-#compare model tables
+#compare model tables (note AICs are rounded so two models come up as best fits even though Model3 is marginally better)
 tree_table
 
 
-#environmental model selection: first condition on crown
+#environmental model selection in RPANDA: 
+#first condition the model on the crown. Probably want to explore crown vs. stem conditioning.
 
+#First we design a model where birth and death rates are allowed to vary through time, 
+#but vary independently of the environmental variable
+
+#define your initial parameters. 
 f.lamb <-function(t,y){y[1]}
 f.mu<-function(t,y){0}
 lamb_par<-c(0.09)
@@ -50,6 +62,7 @@ mu_par<-c()
 
 BD_model<-fit_bd(phylo = tree, tot_time = 22.90199861, f.lamb = f.lamb, f.mu = f.mu, lamb_par = lamb_par, mu_par = mu_par, f = 0.85, cond = "crown")
 
+#next we create a model where speciation rate (lambda) varies as an exponential function of paleoclimate (d18O)
 env<-read.csv("Zachos_climate.csv")
 f.lamb <-function(t,x,y){y[1] * exp(y[2] * x)} #create lambda parameter function where lambda is exponential function of envi variable
 f.mu<-function(t,x,y){0}
@@ -59,7 +72,7 @@ mu_par<-c()
 Env_model<-fit_env(tree, env_data = env, f.lamb = f.lamb, f.mu = f.mu, f=0.85, tot_time = 22.90199861, lamb_par = lamb_par, mu_par = mu_par, cond = "crown", dt = 1e-3)
 plot_fit_env(Env_model, env, 22.90199861)
 
-#condition on stem
+#Now do the same thing but condition the model on stem
 f.lamb <-function(t,y){y[1]}
 f.mu<-function(t,y){0}
 lamb_par<-c(0.09)
@@ -83,7 +96,7 @@ min(table)-table->tree_table
 
 tree_table
 
-#DDD analyses
+#DDD analyses based on condamine et al., 2018, biol letters.
 
 setwd("/Users/lmusher/AMNH/Pachyramphus/biogeography_2/DDD/")
 library(TreePar)
