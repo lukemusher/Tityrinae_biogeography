@@ -1,3 +1,8 @@
+#This script is written by Lukas J Musher. Please cite:
+#Musher, L.J., M. Ferreira, A. Auerbach, J. Mckay, and J. Cracraft. 
+#Why is Amazonia a source of biodiversity? Climate mediated dispersal and synchronous 
+#speciation across the Andes in an avian group (Tityrinae) (In revision) Proceedings of the Royal Society B
+
 require("ape")
 library(gplots)
 library(phytools)
