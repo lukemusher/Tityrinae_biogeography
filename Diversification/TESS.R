@@ -58,4 +58,53 @@ tess.plot.output(output,
                  fig.types = c("net-diversification rates"
                                ),las=2, plot.tree=T, yaxt = )
 
+#evaluate convergence
+tess.plot.singlechain.diagnostics(output = output, 
+                                  parameters = 
+                                    c("speciation rates","extinction rates"),
+                                  las=2
+)
 
+#now let's divide the rates into 20 intevervals and correlate div rates with paleoclimate
+
+#First create a new ouput where numIntevals = 20
+output <- tess.process.output("comet_no_mass_extinctions_tyran_CC15",
+                              numExpectedRateChanges = numExpectedRateChanges,
+                              numExpectedMassExtinctions = numExpectedMassExtinctions,
+                              numIntervals = 20
+                              )
+#evaluate convergence
+tess.plot.singlechain.diagnostics(output = output, 
+                                  parameters = 
+                                    c("speciation rates","extinction rates"),
+                                  las=2
+)
+
+#write your the dates of your 20 intervals to a file
+write.csv(output$intervals, file = "intervals.csv")
+
+#right now you have posterior output for 20 intervals, but we want to summarize these as means 
+#so we create list of the means of posterior net-div-rates of the 20 intevals
+
+net.div.rates<c()
+
+for (i in 1:20){
+  net.div.rates[i]<-mean(output$`net-diversification rates`[,i])
+}
+
+#write the mean net-div-rates for each interval to a file
+write.csv(net.div.rates, file = "net.div.rates.csv")
+
+#I then take means of all the d18O values for each time interval and combine all the data into one "intervals.csv" by hand, 
+#but this could easily be scripted if you have more than 20 intervals
+
+tab<-read.csv("intervals.csv")
+
+attach(tab)
+
+names(tab)
+
+plot(d18O,net.div.rates)
+abline(lm(net.div.rates~d18O))
+
+summary(lm(net.div.rates~d18O))
