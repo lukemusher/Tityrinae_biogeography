@@ -1,3 +1,5 @@
+#These scripts are based on those on the biogeogbears wiki from Nick Matzke
+
 #install.packages("optimx")
 library(optimx)         # You need to have some version of optimx available
 # as it is a BioGeoBEARS dependency; however, if you
