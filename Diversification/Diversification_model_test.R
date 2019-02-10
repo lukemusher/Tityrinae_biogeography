@@ -126,7 +126,7 @@ plot_fit_env(Env_model2, env, 22.90199861)
 AICs<-c(BD_model1$aicc, BD_model2$aicc, BD_model3$aicc, BD_model4$aicc, BD_model5$aicc, Env_model1$aicc, Env_model2$aicc, Env_model3$aicc)
 aic.w(AICs)
 
-#environmental model selection: first condition on stem
+#environmental model selection: next condition on stem
 #first models without envi variable
 
 #pure birth constant rate
