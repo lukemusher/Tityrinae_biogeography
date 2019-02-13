@@ -100,8 +100,8 @@ BD_model6
 #ltt.lines(tree, col="darkred", lwd=3)
 
 #pure birth exponential dependence on temperature
-#env<-read.csv("Zachos_climate.csv")
-env<-InfTemp
+data("InfTemp") #read in RPANDA temp data
+env<-InfTemp 
 f.lamb <-function(t,x,y){y[1]*exp(y[2]*x)}
 f.mu<-function(t,x,y){y}
 lamb_par<-c(0.3, 0.01)
