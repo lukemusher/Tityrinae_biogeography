@@ -4,6 +4,7 @@
 setwd("")
 library(RPANDA)
 library(laser)
+library(phytools)
 
 #Read your tree
 read.tree("Tree.tre")->tree
