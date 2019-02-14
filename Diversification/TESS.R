@@ -1,9 +1,8 @@
 library(ape)
 library(phytools)
 library(phangorn)
-library(devtools)
 library(TESS)
-library(RPANDA)
+
 #We can run this with two expected changes, who knows? We come up with some expected survival prob after an extinction. 
 #Using the expected survival probability, we compute the α and β parameters of
 #the beta distribution. We set the value of β to be large, which focuses the prior
