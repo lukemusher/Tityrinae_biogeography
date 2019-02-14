@@ -5,7 +5,7 @@
 #btorph Sets whether the likelihood is for the branching times (0) or the phylogeny (1) 
 #soc Sets whether stem or crown age should be used (1 or 2)
 
-setwd("/Users/lmusher/AMNH/Pachyramphus/biogeography_2/DDD/")
+setwd("")
 library(TreePar)
 library(DDD)
 library(phytools)
