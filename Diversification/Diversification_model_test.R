@@ -4,9 +4,6 @@
 setwd("")
 library(RPANDA)
 library(laser)
-library(geiger)
-library(DDD)
-library(TESS)
 
 #Read your tree
 read.tree("Tree.tre")->tree
