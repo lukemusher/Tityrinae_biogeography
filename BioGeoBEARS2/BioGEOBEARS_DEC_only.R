@@ -65,7 +65,7 @@ calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_
 
 # slight speedup hopefully
 
-setwd("/Users/lmusher/AMNH/Pachyramphus/biogeography_2/BioGeoBEARS2/")
+setwd("")
 
 trfn =   "Tree.tre"     
 
