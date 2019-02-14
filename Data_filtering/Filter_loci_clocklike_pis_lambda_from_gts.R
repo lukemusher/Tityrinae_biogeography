@@ -19,7 +19,7 @@ library(ips)
 #runs slowly on datasets with lots of tips
 #Start fresh R to maximize efficiency
 
-setwd("/Users/lmusher/AMNH/Pachyramphus/biogeography_2/mafft-nexus-clean-54taxa-95per/")
+setwd("mafft-nexus-clean-54taxa-95per/")
 
 #If you have your alignments in fasta format, you can quickly convert them in R with the following
 #files1 <- list.files(path="/Users/lmusher/Desktop/mafft-nexus-clean-54taxa-95per/clock_test/", pattern="*.fasta", full.names=F, recursive=FALSE)
