@@ -10,7 +10,7 @@ library(RPANDA)
 #density more tightly around the expected survival probability. Then, we compute
 #α based on the expected survival probability and the specified β value
 
-setwd("/Users/lmusher/AMNH/Pachyramphus/biogeography_2/TESS/")
+setwd("")
 read.tree("Tree.tre")->tyran
 
 plot(tyran, show.tip.label = F)
