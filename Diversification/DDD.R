@@ -1,10 +1,3 @@
-#cond == 0 : conditioning on stem or crown age 
-#cond == 1 : conditioning on stem or crown age and non-extinction of the phylogeny 
-#cond == 2 : conditioning on stem or crown age and on the total number of extant taxa (including missing species) 
-#cond == 3 : conditioning on the total number of extant taxa (including missing species) Note: cond == 3 assumes a uniform prior on stem age, as is the standard in constant-rate birth-death models. This conditioning turns out, for the diversity-dependent model, to provide the least-biased parameter estimates when extinction is low, but may still contain considerable bias if extinction is high. The default value has therefore been changed from 1 to 3 starting with DDD version 2.2. 
-#btorph Sets whether the likelihood is for the branching times (0) or the phylogeny (1) 
-#soc Sets whether stem or crown age should be used (1 or 2)
-
 setwd("")
 library(TreePar)
 library(DDD)
